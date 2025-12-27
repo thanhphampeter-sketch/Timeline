@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Our Timeline</title>
+
+<style>
+/* ===== BASE ===== */
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  min-height:100vh;
+  background:linear-gradient(180deg,#ffe0ef,#ffffff);
+  overflow:hidden;
+  font-family:"Playfair Display", Georgia, serif;
+}
+
+/* ===== INTRO ===== */
+#intro{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(#ffb7d5,#ffe5f1);
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+#heart{
+  width:170px;height:170px;
+  background:#ff4f88;
+  position:relative;
+  transform:rotate(45deg);
+  cursor:pointer;
+  animation:pulse 2s infinite;
+}
+#heart::before,#heart::after{
+  content:"";
+  position:absolute;
+  width:170px;height:170px;
+  background:#ff4f88;
+  border-radius:50%;
+}
+#heart::before{top:-85px}
+#heart::after{left:-85px}
+@keyframes pulse{50%{transform:rotate(45deg) scale(1.06)}}
+@keyframes driftAway{
+  to{transform:translateY(-260px) rotate(45deg) scale(0.7);opacity:0}
+}
+
+/* Curtain */
+#curtainL,#curtainR{
+  position:fixed;top:0;bottom:0;width:50%;
+  background:#f5a0be;z-index:9;
+}
+#curtainL{left:0} #curtainR{right:0}
+.open #curtainL{animation:openL 1.6s forwards}
+.open #curtainR{animation:openR 1.6s forwards}
+@keyframes openL{to{transform:translateX(-100%)}}
+@keyframes openR{to{transform:translateX(100%)}}
+
+/* ===== MAIN ===== */
+#main{opacity:0;pointer-events:none;transition:1.4s ease}
+#main.show{opacity:1;pointer-events:auto}
+
+/* ===== LANTERNS ===== */
+.lantern-row{
+  position:fixed;top:0;left:0;right:0;height:160px;pointer-events:none;
+}
+.lantern{
+  position:absolute;top:45px;
+  width:48px;height:70px;
+  background:#ff9ac9;border-radius:10px;
+  box-shadow:0 0 35px #ff7fbf;
+  animation:sway 4s ease-in-out infinite;
+}
+.lantern::before{
+  content:"";position:absolute;top:-45px;left:50%;
+  width:2px;height:45px;background:#9a6b7a;
+}
+@keyframes sway{50%{transform:rotate(2deg)}}
+
+/* ===== HEART DECOR ===== */
+.side-hearts{
+  position:fixed;top:160px;bottom:0;width:140px;
+}
+.side-hearts.left{left:0}
+.side-hearts.right{right:0}
+.side-hearts div{
+  width:34px;height:34px;
+  background:#ff6fa6;margin:28px auto;
+  transform:rotate(45deg);animation:float 6s infinite;
+}
+.side-hearts div::before,
+.side-hearts div::after{
+  content:"";position:absolute;
+  width:34px;height:34px;background:#ff6fa6;border-radius:50%;
+}
+.side-hearts div::before{top:-17px}
+.side-hearts div::after{left:-17px}
+@keyframes float{50%{transform:rotate(45deg) translateY(-12px)}}
+
+/* ===== TITLE ===== */
+h1{
+  text-align:center;margin-top:170px;
+  font-size:48px;color:#b3004d;
+}
+
+/* ===== TIMELINE ===== */
+.timeline-wrap{
+  margin:70px auto 0;
+  max-width:75%;overflow-x:auto;
+}
+.timeline{
+  position:relative;display:flex;
+  justify-content:center;gap:70px;
+  padding:40px 20px 60px;
+}
+.timeline::before{
+  content:"";position:absolute;
+  top:60px;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,#ff9fc4,#ff6fa6);
+}
+.event{min-width:160px;text-align:center;cursor:pointer}
+.event-card{
+  margin-top:90px;padding:16px;
+  background:white;border-radius:14px;
+  box-shadow:0 8px 18px rgba(0,0,0,.18);
+  font-size:18px;transition:.3s;
+}
+.event:hover .event-card{transform:scale(1.07)}
+
+/* ===== ENVELOPE ===== */
+#envelope{
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.45);
+  display:none;align-items:center;justify-content:center;
+  z-index:20;
+}
+.env-box{
+  width:360px;
+  height:260px;
+  background:#fff;
+  border-radius:18px;
+  position:relative;
+  text-align:center;
+
+  padding-top:120px;
+
+  box-shadow:0 18px 35px rgba(0,0,0,.25);
+}
+
+.env-flap{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+
+  height:90px;
+
+  background:#ffb7d5;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  transform-origin:top;
+  border-top-left-radius:18px;
+  border-top-right-radius:18px;
+}
+}
+.opening .env-flap{animation:flap 1.2s forwards}
+@keyframes flap{to{transform:rotateX(180deg);opacity:0}}
+
+.env-box p{font-size:22px;margin-bottom:10px}
+.env-box input{
+  font-size:20px;padding:8px 14px;
+  border-radius:8px;border:2px solid #ff8fb9;
+}
+.env-box button{
+  margin-top:12px;font-size:18px;
+  padding:8px 20px;border:none;
+  background:#ff6fa6;color:white;
+  border-radius:20px;cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro"><div id="heart"></div></div>
+<div id="curtainL"></div><div id="curtainR"></div>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="lantern-row">
+    <div class="lantern" style="left:8%"></div>
+    <div class="lantern" style="left:22%;animation-delay:1s"></div>
+    <div class="lantern" style="left:40%"></div>
+    <div class="lantern" style="left:60%;animation-delay:1.3s"></div>
+    <div class="lantern" style="left:78%"></div>
+  </div>
+
+  <div class="side-hearts left"><div></div><div></div><div></div></div>
+  <div class="side-hearts right"><div></div><div></div><div></div></div>
+
+  <h1>Dòng thời gian của tụi mình</h1>
+
+  <div class="timeline-wrap">
+    <div class="timeline">
+      <div class="event" onclick="openEvent(1)"><div class="event-card">Kỉ niệm 1</div></div>
+      <div class="event" onclick="openEvent(2)"><div class="event-card">Kỉ niệm 2</div></div>
+      <div class="event" onclick="openEvent(3)"><div class="event-card">Kỉ niệm 3</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ENVELOPE -->
+<div id="envelope">
+  <div class="env-box">
+    <div class="env-flap"></div>
+    <p>Nhập mật khẩu 💌</p>
+    <input id="pwd" type="password"><br>
+    <button onclick="check()">Mở</button>
+  </div>
+</div>
+
+<audio id="bgm" src="music.mp3" loop></audio>
+
+<script>
+let currentEvent = 0;
+
+/* PASSWORDS PER EVENT */
+const passwords = {
+  1: "1thang",
+  2: "2thang",
+  3: "3thang"
+};
+
+document.getElementById("heart").onclick = ()=>{
+  bgm.play();
+  heart.style.animation="driftAway 2s forwards";
+  document.body.classList.add("open");
+  setTimeout(()=>{
+    intro.style.display="none";
+    main.classList.add("show");
+  },2000);
+};
+
+function openEvent(n){
+  currentEvent = n;
+  envelope.style.display="flex";
+}
+
+function check(){
+  if(pwd.value === passwords[currentEvent]){
+    document.querySelector(".env-box").classList.add("opening");
+    setTimeout(()=>{
+      location.href = "letter"+currentEvent+".html";
+    },1200);
+  }else{
+    alert("Chưa tới mòo~ đợi đi :>>");
+  }
+}
+</script>
+
+</body>
+</html>
