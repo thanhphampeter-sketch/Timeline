@@ -2,9 +2,9 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Bốn tháng rùiiii 💌</title>
+  <title>Bốn tháng rồi 💌</title>
 
-  <!-- Vietnamese-safe fonts -->
+  <!-- Fonts (unchanged) -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Merriweather&display=swap" rel="stylesheet">
 
   <style>
@@ -16,8 +16,49 @@
       align-items: center;
       background: linear-gradient(135deg, #ffd6e0, #f8b4c0);
       font-family: 'Merriweather', serif;
+      overflow: hidden;
     }
 
+    /* ===== DECORATIONS ===== */
+    .side-decor {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: 220px;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      opacity: 0.9;
+    }
+
+    .side-decor.left { left: 0; }
+    .side-decor.right { right: 0; }
+
+    .heart {
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle at 30% 30%, #fff, #ff5d73);
+      clip-path: path("M45 80 C10 50 5 30 20 20 C30 10 45 20 45 30 C45 20 60 10 70 20 C85 30 80 50 45 80 Z");
+      animation: sway 6s ease-in-out infinite;
+      filter: drop-shadow(0 10px 20px rgba(255,0,80,0.3));
+    }
+
+    .heart.small {
+      width: 55px;
+      height: 55px;
+      opacity: 0.8;
+      animation-duration: 8s;
+    }
+
+    @keyframes sway {
+      0%   { transform: translateY(0) rotate(-3deg); }
+      50%  { transform: translateY(-15px) rotate(3deg); }
+      100% { transform: translateY(0) rotate(-3deg); }
+    }
+
+    /* ===== LETTER ===== */
     .letter-container {
       background: #fff8f9;
       max-width: 700px;
@@ -25,6 +66,7 @@
       border-radius: 24px;
       box-shadow: 0 20px 40px rgba(0,0,0,0.15);
       position: relative;
+      z-index: 10;
     }
 
     h1 {
@@ -56,7 +98,7 @@
       color: #c1121f;
     }
 
-    /* Music button */
+    /* Music button (unchanged) */
     .music-btn {
       position: absolute;
       top: 20px;
@@ -79,10 +121,22 @@
 
 <body>
 
+  <!-- SIDE DECORATIONS -->
+  <div class="side-decor left">
+    <div class="heart"></div>
+    <div class="heart small"></div>
+    <div class="heart"></div>
+  </div>
+
+  <div class="side-decor right">
+    <div class="heart small"></div>
+    <div class="heart"></div>
+    <div class="heart small"></div>
+  </div>
+
   <!-- Background Music -->
   <audio id="bgMusic" loop>
-    <!-- CHANGE THIS FILE NAME -->
-    <source src="lletter1-music.mp3" type="audio/mpeg">
+    <source src="letter1-music.mp3" type="audio/mpeg">
   </audio>
 
   <div class="letter-container">
@@ -106,7 +160,7 @@
     <p>
       Và chúc bé iuu của anh học thật tốt, thật siêng và ngoann nha,
       cũng như đừng chán Thành :(((.
-      Sắp tới nhớ ăn ún đầy đủu siêng học vì thời gian ngày càng ít đi đóoo.
+      Sắp tới nhớ ăn ún đầy đủđủ siêng học vì thời gian ngày càng ít đi đóoo.
     </p>
 
     <p class="signature">
@@ -120,7 +174,7 @@
 
     function toggleMusic() {
       if (!playing) {
-        music.volume = 0.25; // soft volume
+        music.volume = 0.25;
         music.play();
         playing = true;
       } else {
@@ -129,7 +183,6 @@
       }
     }
 
-    // Auto start after first click anywhere
     document.body.addEventListener("click", () => {
       if (!playing) {
         music.volume = 0.25;
