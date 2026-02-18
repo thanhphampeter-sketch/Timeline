@@ -1,182 +1,232 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>My Love Letter ❤️</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tết & 5 Tháng 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather&display=swap" rel="stylesheet">
 
 <style>
-/* ===== GLOBAL ===== */
-body {
+html, body {
   margin: 0;
-  height: 100vh;
-  background: radial-gradient(circle at top, #ff5a7a, #8b0000);
-  font-family: 'Poppins', sans-serif;
-  color: white;
+  padding: 0;
+  height: 100%;
   overflow: hidden;
+  font-family: 'Merriweather', serif;
+  background: radial-gradient(circle at top, #ffd1dc, #c1121f);
+}
+
+/* ===== CANVAS ===== */
+canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ===== HEARTS ===== */
+.heart {
+  position: fixed;
+  background: radial-gradient(circle at 30% 30%, #fff, #ff4f81);
+  filter: drop-shadow(0 15px 30px rgba(255,80,120,.45));
+  animation: sway ease-in-out infinite;
+  z-index: 2;
+}
+
+/* different shapes + sizes */
+.h1 { width:180px;height:180px; clip-path:path("M90 160 C25 100 15 55 45 35 C70 15 90 35 90 55 C90 35 110 15 135 35 C165 55 155 100 90 160 Z"); left:30px; top:10%; animation-duration:9s; }
+.h2 { width:130px;height:130px; clip-path:path("M65 120 C15 75 10 40 35 25 C55 10 65 25 65 40 C65 25 80 10 95 25 C120 40 115 75 65 120 Z"); left:90px; top:35%; animation-duration:7s; }
+.h3 { width:150px;height:150px; clip-path:path("M75 135 C20 85 15 45 40 30 C60 15 75 30 75 45 C75 30 90 15 110 30 C135 45 130 85 75 135 Z"); left:50px; top:65%; animation-duration:8s; }
+
+.h4 { width:140px;height:140px; clip-path:path("M70 125 C18 80 12 45 38 28 C58 12 70 28 70 42 C70 28 82 12 102 28 C128 45 122 80 70 125 Z"); right:40px; top:12%; animation-duration:9s; }
+.h5 { width:190px;height:190px; clip-path:path("M95 170 C30 110 20 60 50 40 C75 18 95 40 95 60 C95 40 115 18 140 40 C170 60 160 110 95 170 Z"); right:90px; top:38%; animation-duration:10s; }
+.h6 { width:125px;height:125px; clip-path:path("M62 115 C15 70 10 40 32 25 C52 10 62 25 62 40 C62 25 72 10 92 25 C115 40 110 70 62 115 Z"); right:60px; top:70%; animation-duration:7.5s; }
+
+@keyframes sway {
+  0% { transform: translateY(0) rotate(-4deg); }
+  50% { transform: translateY(-22px) rotate(4deg); }
+  100% { transform: translateY(0) rotate(-4deg); }
+}
+
+/* ===== LETTER ===== */
+.wrapper {
+  position: relative;
+  z-index: 3;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* ===== LETTER ===== */
 .letter {
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 20px;
-  padding: 30px;
-  max-width: 420px;
+  background: #fff6f8;
+  width: 720px;
+  max-width: 90%;
+  padding: 55px 60px;
+  border-radius: 28px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
   text-align: center;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 40px rgba(255, 0, 70, 0.6);
-  z-index: 2;
+  font-size: 42px;
+  color: #c1121f;
 }
 
-.letter h1 {
-  margin-top: 0;
-  color: #ffd6e0;
+.sub {
+  text-align: center;
+  margin-bottom: 35px;
+  color: #555;
 }
 
-.letter p {
-  line-height: 1.6;
-  font-size: 16px;
+p {
+  font-size: 20px;
+  line-height: 1.9;
 }
 
-/* ===== HEARTS ===== */
-.heart {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  background: #ff2d55;
-  transform: rotate(45deg);
-  animation: floatUp linear infinite;
-  opacity: 0.9;
+.signature {
+  text-align: right;
+  margin-top: 30px;
+  font-weight: bold;
+  color: #c1121f;
 }
 
-.heart::before,
-.heart::after {
-  content: "";
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  background: #ff2d55;
-  border-radius: 50%;
-}
-
-.heart::before {
-  top: -9px;
-  left: 0;
-}
-
-.heart::after {
-  left: -9px;
-  top: 0;
-}
-
-@keyframes floatUp {
-  from {
-    transform: translateY(0) rotate(45deg);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-120vh) rotate(45deg);
-    opacity: 0;
-  }
-}
-
-/* ===== FIREWORK ===== */
-.spark {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #ff4d6d;
-  box-shadow: 0 0 35px 18px rgba(255, 77, 109, 0.9);
-  pointer-events: none;
+/* ===== BANNER ===== */
+.banner {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #ff4d6d, #ff8fab);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-weight: bold;
+  z-index: 4;
 }
 </style>
 </head>
 
 <body>
 
-<div class="letter">
-  <h1>❤️ My Love ❤️</h1>
-  <p>
-    Every time I think about you,<br>
-    my heart feels warm and safe.<br><br>
-    You are not just someone I love,<br>
-    you are the reason my days feel brighter<br>
-    and my nights feel softer.<br><br>
-    No matter where life takes us,<br>
-    my heart will always find its way back to you.
-  </p>
-  <p style="margin-top:20px;">Forever yours 💕</p>
+<div class="banner">🌸 Chúc Mừng Năm Mới & 5 Tháng Yêu Nhau 🌸</div>
+
+<canvas id="fireworks"></canvas>
+
+<!-- Hearts -->
+<div class="heart h1"></div>
+<div class="heart h2"></div>
+<div class="heart h3"></div>
+<div class="heart h4"></div>
+<div class="heart h5"></div>
+<div class="heart h6"></div>
+
+<!-- Audio -->
+<audio id="bgm" src="music.mp3" loop></audio>
+<audio id="boom" src="firework.mp3" preload="auto"></audio>
+
+<div class="wrapper">
+  <div class="letter">
+    <h1>5 Tháng & Một Cái Tết 💖</h1>
+    <div class="sub">Tết này có em, mọi thứ đều đủ đầy.</div>
+
+    <p>
+      Vậy là mình đã cùng nhau đi qua 5 tháng rồi đó.
+      Một chặng đường chưa dài, nhưng đủ để anh trân trọng
+      từng khoảnh khắc mình có cùng nhau.
+    </p>
+
+    <p>
+      Cái Tết này đặc biệt hơn mọi năm,
+      vì anh có thêm một điều để mong chờ,
+      một người để thương và để nhớ — là em.
+    </p>
+
+    <p>
+      Mong rằng những tháng tiếp theo,
+      và cả những cái Tết sau này,
+      mình vẫn nắm tay nhau như bây giờ.
+    </p>
+
+    <p class="signature">
+      Chúc em năm mới bình an 💗<br>
+      Cảm ơn em vì đã ở đây cùng anh.
+    </p>
+  </div>
 </div>
 
 <script>
-/* ===== HEART GENERATOR ===== */
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.bottom = "-20px";
-  heart.style.animationDuration = 4 + Math.random() * 4 + "s";
-  document.body.appendChild(heart);
+const canvas = document.getElementById('fireworks');
+const ctx = canvas.getContext('2d');
+const boom = document.getElementById('boom');
+const bgm = document.getElementById('bgm');
 
-  setTimeout(() => heart.remove(), 8000);
-}
-setInterval(createHeart, 280);
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
-/* ===== FIREWORK SOUNDS ===== */
-/* Put these files in a /sounds folder */
-const fireworkSounds = [
-  new Audio("sounds/firework1.mp3"),
-  new Audio("sounds/firework2.mp3"),
-  new Audio("sounds/firework3.mp3")
-];
+window.onresize = () => {
+  canvas.width = innerWidth;
+  canvas.height = innerHeight;
+};
 
-function playFireworkSounds() {
-  fireworkSounds.forEach(sound => {
-    const s = sound.cloneNode();
-    s.volume = 0.5 + Math.random() * 0.4;
-    s.play();
-  });
-}
-
-/* ===== EXPLOSION ===== */
-function explode(x, y) {
-  playFireworkSounds();
-
-  for (let i = 0; i < 22; i++) {
-    const spark = document.createElement("div");
-    spark.className = "spark";
-    spark.style.left = x + "px";
-    spark.style.top = y + "px";
-    document.body.appendChild(spark);
-
-    const angle = Math.random() * Math.PI * 2;
-    const distance = 90 + Math.random() * 90;
-
-    spark.animate([
-      { transform: "translate(0,0)", opacity: 1 },
-      {
-        transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`,
-        opacity: 0
-      }
-    ], {
-      duration: 1000,
-      easing: "ease-out"
-    });
-
-    setTimeout(() => spark.remove(), 1000);
+class Particle {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.vx = (Math.random() - 0.5) * 10;
+    this.vy = (Math.random() - 0.5) * 10;
+    this.life = 90;
+    this.size = Math.random() * 3 + 3;
+    this.color = `hsl(${Math.random()*30+330},100%,70%)`;
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.vy += 0.08;
+    this.life--;
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+    ctx.fill();
   }
 }
 
-/* Click anywhere */
-document.addEventListener("click", e => {
-  explode(e.clientX, e.clientY);
-});
+let particles = [];
+
+function explode(x, y) {
+  for (let i = 0; i < 120; i++) particles.push(new Particle(x, y));
+  boom.currentTime = 0;
+  boom.volume = 0.45;
+  boom.play().catch(()=>{});
+}
+
+function autoFireworks() {
+  explode(
+    Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
+    Math.random() * canvas.height * 0.35 + 60
+  );
+}
+
+setInterval(autoFireworks, 1500);
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  particles = particles.filter(p => p.life > 0);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animate);
+}
+animate();
+
+/* enable audio after first click */
+document.body.addEventListener('click', () => {
+  bgm.volume = 0.25;
+  bgm.play().catch(()=>{});
+  boom.play().then(()=>boom.pause()).catch(()=>{});
+}, { once:true });
 </script>
 
 </body>
 </html>
-
