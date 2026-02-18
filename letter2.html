@@ -1,234 +1,182 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tết & 5 Tháng 💗</title>
+<meta charset="UTF-8">
+<title>My Love Letter ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Fonts (Vietnamese safe) -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Be+Vietnam+Pro&display=swap" rel="stylesheet">
+<style>
+/* ===== GLOBAL ===== */
+body {
+  margin: 0;
+  height: 100vh;
+  background: radial-gradient(circle at top, #ff5a7a, #8b0000);
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+/* ===== LETTER ===== */
+.letter {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 420px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 40px rgba(255, 0, 70, 0.6);
+  z-index: 2;
+}
 
-    body {
-      font-family: 'Be Vietnam Pro', sans-serif;
-      background: radial-gradient(circle at top, #ffd6e5, #ff9bbd);
-      overflow: hidden;
-      height: 100vh;
-    }
+.letter h1 {
+  margin-top: 0;
+  color: #ffd6e0;
+}
 
-    /* ===== MUSIC ===== */
-    audio {
-      display: none;
-    }
+.letter p {
+  line-height: 1.6;
+  font-size: 16px;
+}
 
-    /* ===== FIREWORK CANVAS ===== */
-    canvas {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-    }
+/* ===== HEARTS ===== */
+.heart {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #ff2d55;
+  transform: rotate(45deg);
+  animation: floatUp linear infinite;
+  opacity: 0.9;
+}
 
-    /* ===== TITLE BUTTON ===== */
-    .title-screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-      transition: opacity 1s ease, transform 1s ease;
-    }
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #ff2d55;
+  border-radius: 50%;
+}
 
-    .title-btn {
-      font-family: 'Playfair Display', serif;
-      font-size: 34px;
-      padding: 24px 48px;
-      border-radius: 60px;
-      background: linear-gradient(135deg, #ff4d6d, #ff8fab);
-      color: white;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 20px 40px rgba(0,0,0,.25);
-      transition: transform .4s ease, box-shadow .4s ease;
-    }
+.heart::before {
+  top: -9px;
+  left: 0;
+}
 
-    .title-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 25px 60px rgba(0,0,0,.35);
-    }
+.heart::after {
+  left: -9px;
+  top: 0;
+}
 
-    /* ===== LETTER ===== */
-    .letter-wrapper {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(40px);
-      transition: opacity 1.2s ease, transform 1.2s ease;
-      z-index: 1;
-    }
+@keyframes floatUp {
+  from {
+    transform: translateY(0) rotate(45deg);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-120vh) rotate(45deg);
+    opacity: 0;
+  }
+}
 
-    .letter {
-      background: #fff5f8;
-      max-width: 720px;
-      padding: 50px;
-      border-radius: 28px;
-      box-shadow: 0 30px 80px rgba(0,0,0,.25);
-      text-align: center;
-    }
-
-    .letter h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 36px;
-      color: #c1121f;
-      margin-bottom: 18px;
-    }
-
-    .letter p {
-      font-size: 20px;
-      line-height: 1.9;
-      color: #3a3a3a;
-      margin-top: 16px;
-    }
-
-    /* ===== ACTIVE STATES ===== */
-    .hidden {
-      opacity: 0;
-      pointer-events: none;
-      transform: scale(.9);
-    }
-
-    .show {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
-  </style>
+/* ===== FIREWORK ===== */
+.spark {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff4d6d;
+  box-shadow: 0 0 35px 18px rgba(255, 77, 109, 0.9);
+  pointer-events: none;
+}
+</style>
 </head>
 
 <body>
 
-<!-- 🎵 Background music -->
-<audio id="bgMusic" src="letter2-music.mp3" loop></audio>
-
-<!-- 🎆 Firework sound -->
-<audio id="boom" src="firework.mp3"></audio>
-
-<canvas id="fireworks"></canvas>
-
-<!-- TITLE -->
-<div class="title-screen" id="titleScreen">
-  <button class="title-btn" onclick="startLetter()">
-    🌸 Chúc Mừng Năm Mới & 5 Tháng Yêu Nhau 🌸
-  </button>
-</div>
-
-<!-- LETTER -->
-<div class="letter-wrapper" id="letter">
-  <div class="letter">
-    <h1>Tết này có chúng ta 💗</h1>
-    <p>
-      5 tháng bên nhau, rồi thêm một cái Tết nữa có em.<br>
-      Cảm ơn em vì đã ở lại, vì đã chọn anh,  
-      và vì đã làm những ngày bình thường trở nên đặc biệt.
-    </p>
-    <p>
-      Mong rằng không chỉ Tết này,  
-      mà rất nhiều mùa xuân sau nữa…  
-      mình vẫn cùng nhau như vậy.
-    </p>
-    <p>Yêu em rất nhiều 💖</p>
-  </div>
+<div class="letter">
+  <h1>❤️ My Love ❤️</h1>
+  <p>
+    Every time I think about you,<br>
+    my heart feels warm and safe.<br><br>
+    You are not just someone I love,<br>
+    you are the reason my days feel brighter<br>
+    and my nights feel softer.<br><br>
+    No matter where life takes us,<br>
+    my heart will always find its way back to you.
+  </p>
+  <p style="margin-top:20px;">Forever yours 💕</p>
 </div>
 
 <script>
-  const title = document.getElementById('titleScreen');
-  const letter = document.getElementById('letter');
-  const music = document.getElementById('bgMusic');
-  const boom = document.getElementById('boom');
+/* ===== HEART GENERATOR ===== */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.bottom = "-20px";
+  heart.style.animationDuration = 4 + Math.random() * 4 + "s";
+  document.body.appendChild(heart);
 
-  function startLetter() {
-    title.classList.add('hidden');
-    letter.classList.add('show');
-    music.volume = 0.35;
-    music.play();
+  setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 280);
 
-    // Play firework sound only 2 times
-    setTimeout(() => boom.play(), 800);
-    setTimeout(() => boom.play(), 2200);
-  }
+/* ===== FIREWORK SOUNDS ===== */
+/* Put these files in a /sounds folder */
+const fireworkSounds = [
+  new Audio("sounds/firework1.mp3"),
+  new Audio("sounds/firework2.mp3"),
+  new Audio("sounds/firework3.mp3")
+];
 
-  /* ===== FIREWORKS ===== */
-  const canvas = document.getElementById('fireworks');
-  const ctx = canvas.getContext('2d');
-  canvas.width = innerWidth;
-  canvas.height = innerHeight;
+function playFireworkSounds() {
+  fireworkSounds.forEach(sound => {
+    const s = sound.cloneNode();
+    s.volume = 0.5 + Math.random() * 0.4;
+    s.play();
+  });
+}
 
-  const fireworks = [];
+/* ===== EXPLOSION ===== */
+function explode(x, y) {
+  playFireworkSounds();
 
-  function randomFirework() {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height * 0.6;
-    const particles = [];
-    const colors = ['#ff4d6d', '#ff8fab', '#ffd166', '#fff'];
+  for (let i = 0; i < 22; i++) {
+    const spark = document.createElement("div");
+    spark.className = "spark";
+    spark.style.left = x + "px";
+    spark.style.top = y + "px";
+    document.body.appendChild(spark);
 
-    for (let i = 0; i < 90; i++) {
-      particles.push({
-        x, y,
-        angle: Math.random() * Math.PI * 2,
-        speed: Math.random() * 4 + 2,
-        radius: 2,
-        alpha: 1,
-        color: colors[Math.floor(Math.random() * colors.length)]
-      });
-    }
-    fireworks.push(particles);
-  }
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 90 + Math.random() * 90;
 
-  function animate() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-
-    fireworks.forEach((fw, i) => {
-      fw.forEach(p => {
-        p.x += Math.cos(p.angle) * p.speed;
-        p.y += Math.sin(p.angle) * p.speed;
-        p.alpha -= 0.015;
-
-        ctx.globalAlpha = p.alpha;
-        ctx.fillStyle = p.color;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      if (fw[0].alpha <= 0) fireworks.splice(i,1);
+    spark.animate([
+      { transform: "translate(0,0)", opacity: 1 },
+      {
+        transform: `translate(${Math.cos(angle)*distance}px, ${Math.sin(angle)*distance}px)`,
+        opacity: 0
+      }
+    ], {
+      duration: 1000,
+      easing: "ease-out"
     });
 
-    ctx.globalAlpha = 1;
-    requestAnimationFrame(animate);
+    setTimeout(() => spark.remove(), 1000);
   }
+}
 
-  setInterval(randomFirework, 900);
-  animate();
-
-  window.onresize = () => {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-  };
+/* Click anywhere */
+document.addEventListener("click", e => {
+  explode(e.clientX, e.clientY);
+});
 </script>
 
 </body>
 </html>
 
-
-</body>
-</html>
