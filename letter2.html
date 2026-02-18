@@ -1,232 +1,234 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Tết & 5 Tháng 💖</title>
+  <meta charset="UTF-8">
+  <title>Tết & 5 Tháng 💗</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather&display=swap" rel="stylesheet">
+  <!-- Fonts (Vietnamese safe) -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Be+Vietnam+Pro&display=swap" rel="stylesheet">
 
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  font-family: 'Merriweather', serif;
-  background: radial-gradient(circle at top, #ffd1dc, #c1121f);
-}
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* ===== CANVAS ===== */
-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-}
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: radial-gradient(circle at top, #ffd6e5, #ff9bbd);
+      overflow: hidden;
+      height: 100vh;
+    }
 
-/* ===== HEARTS ===== */
-.heart {
-  position: fixed;
-  background: radial-gradient(circle at 30% 30%, #fff, #ff4f81);
-  filter: drop-shadow(0 15px 30px rgba(255,80,120,.45));
-  animation: sway ease-in-out infinite;
-  z-index: 2;
-}
+    /* ===== MUSIC ===== */
+    audio {
+      display: none;
+    }
 
-/* different shapes + sizes */
-.h1 { width:180px;height:180px; clip-path:path("M90 160 C25 100 15 55 45 35 C70 15 90 35 90 55 C90 35 110 15 135 35 C165 55 155 100 90 160 Z"); left:30px; top:10%; animation-duration:9s; }
-.h2 { width:130px;height:130px; clip-path:path("M65 120 C15 75 10 40 35 25 C55 10 65 25 65 40 C65 25 80 10 95 25 C120 40 115 75 65 120 Z"); left:90px; top:35%; animation-duration:7s; }
-.h3 { width:150px;height:150px; clip-path:path("M75 135 C20 85 15 45 40 30 C60 15 75 30 75 45 C75 30 90 15 110 30 C135 45 130 85 75 135 Z"); left:50px; top:65%; animation-duration:8s; }
+    /* ===== FIREWORK CANVAS ===== */
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
 
-.h4 { width:140px;height:140px; clip-path:path("M70 125 C18 80 12 45 38 28 C58 12 70 28 70 42 C70 28 82 12 102 28 C128 45 122 80 70 125 Z"); right:40px; top:12%; animation-duration:9s; }
-.h5 { width:190px;height:190px; clip-path:path("M95 170 C30 110 20 60 50 40 C75 18 95 40 95 60 C95 40 115 18 140 40 C170 60 160 110 95 170 Z"); right:90px; top:38%; animation-duration:10s; }
-.h6 { width:125px;height:125px; clip-path:path("M62 115 C15 70 10 40 32 25 C52 10 62 25 62 40 C62 25 72 10 92 25 C115 40 110 70 62 115 Z"); right:60px; top:70%; animation-duration:7.5s; }
+    /* ===== TITLE BUTTON ===== */
+    .title-screen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: opacity 1s ease, transform 1s ease;
+    }
 
-@keyframes sway {
-  0% { transform: translateY(0) rotate(-4deg); }
-  50% { transform: translateY(-22px) rotate(4deg); }
-  100% { transform: translateY(0) rotate(-4deg); }
-}
+    .title-btn {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      padding: 24px 48px;
+      border-radius: 60px;
+      background: linear-gradient(135deg, #ff4d6d, #ff8fab);
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 20px 40px rgba(0,0,0,.25);
+      transition: transform .4s ease, box-shadow .4s ease;
+    }
 
-/* ===== LETTER ===== */
-.wrapper {
-  position: relative;
-  z-index: 3;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .title-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 25px 60px rgba(0,0,0,.35);
+    }
 
-.letter {
-  background: #fff6f8;
-  width: 720px;
-  max-width: 90%;
-  padding: 55px 60px;
-  border-radius: 28px;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.25);
-}
+    /* ===== LETTER ===== */
+    .letter-wrapper {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(40px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      z-index: 1;
+    }
 
-h1 {
-  font-family: 'Playfair Display', serif;
-  text-align: center;
-  font-size: 42px;
-  color: #c1121f;
-}
+    .letter {
+      background: #fff5f8;
+      max-width: 720px;
+      padding: 50px;
+      border-radius: 28px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.25);
+      text-align: center;
+    }
 
-.sub {
-  text-align: center;
-  margin-bottom: 35px;
-  color: #555;
-}
+    .letter h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: #c1121f;
+      margin-bottom: 18px;
+    }
 
-p {
-  font-size: 20px;
-  line-height: 1.9;
-}
+    .letter p {
+      font-size: 20px;
+      line-height: 1.9;
+      color: #3a3a3a;
+      margin-top: 16px;
+    }
 
-.signature {
-  text-align: right;
-  margin-top: 30px;
-  font-weight: bold;
-  color: #c1121f;
-}
+    /* ===== ACTIVE STATES ===== */
+    .hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(.9);
+    }
 
-/* ===== BANNER ===== */
-.banner {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: linear-gradient(135deg, #ff4d6d, #ff8fab);
-  color: white;
-  padding: 12px 28px;
-  border-radius: 999px;
-  font-weight: bold;
-  z-index: 4;
-}
-</style>
+    .show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="banner">🌸 Chúc Mừng Năm Mới & 5 Tháng Yêu Nhau 🌸</div>
+<!-- 🎵 Background music -->
+<audio id="bgMusic" src="letter2-music.mp3" loop></audio>
+
+<!-- 🎆 Firework sound -->
+<audio id="boom" src="firework.mp3"></audio>
 
 <canvas id="fireworks"></canvas>
 
-<!-- Hearts -->
-<div class="heart h1"></div>
-<div class="heart h2"></div>
-<div class="heart h3"></div>
-<div class="heart h4"></div>
-<div class="heart h5"></div>
-<div class="heart h6"></div>
+<!-- TITLE -->
+<div class="title-screen" id="titleScreen">
+  <button class="title-btn" onclick="startLetter()">
+    🌸 Chúc Mừng Năm Mới & 5 Tháng Yêu Nhau 🌸
+  </button>
+</div>
 
-<!-- Audio -->
-<audio id="bgm" src="music.mp3" loop></audio>
-<audio id="boom" src="firework.mp3" preload="auto"></audio>
-
-<div class="wrapper">
+<!-- LETTER -->
+<div class="letter-wrapper" id="letter">
   <div class="letter">
-    <h1>5 Tháng & Một Cái Tết 💖</h1>
-    <div class="sub">Tết này có em, mọi thứ đều đủ đầy.</div>
-
+    <h1>Tết này có chúng ta 💗</h1>
     <p>
-      Vậy là mình đã cùng nhau đi qua 5 tháng rồi đó.
-      Một chặng đường chưa dài, nhưng đủ để anh trân trọng
-      từng khoảnh khắc mình có cùng nhau.
+      5 tháng bên nhau, rồi thêm một cái Tết nữa có em.<br>
+      Cảm ơn em vì đã ở lại, vì đã chọn anh,  
+      và vì đã làm những ngày bình thường trở nên đặc biệt.
     </p>
-
     <p>
-      Cái Tết này đặc biệt hơn mọi năm,
-      vì anh có thêm một điều để mong chờ,
-      một người để thương và để nhớ — là em.
+      Mong rằng không chỉ Tết này,  
+      mà rất nhiều mùa xuân sau nữa…  
+      mình vẫn cùng nhau như vậy.
     </p>
-
-    <p>
-      Mong rằng những tháng tiếp theo,
-      và cả những cái Tết sau này,
-      mình vẫn nắm tay nhau như bây giờ.
-    </p>
-
-    <p class="signature">
-      Chúc em năm mới bình an 💗<br>
-      Cảm ơn em vì đã ở đây cùng anh.
-    </p>
+    <p>Yêu em rất nhiều 💖</p>
   </div>
 </div>
 
 <script>
-const canvas = document.getElementById('fireworks');
-const ctx = canvas.getContext('2d');
-const boom = document.getElementById('boom');
-const bgm = document.getElementById('bgm');
+  const title = document.getElementById('titleScreen');
+  const letter = document.getElementById('letter');
+  const music = document.getElementById('bgMusic');
+  const boom = document.getElementById('boom');
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+  function startLetter() {
+    title.classList.add('hidden');
+    letter.classList.add('show');
+    music.volume = 0.35;
+    music.play();
 
-window.onresize = () => {
+    // Play firework sound only 2 times
+    setTimeout(() => boom.play(), 800);
+    setTimeout(() => boom.play(), 2200);
+  }
+
+  /* ===== FIREWORKS ===== */
+  const canvas = document.getElementById('fireworks');
+  const ctx = canvas.getContext('2d');
   canvas.width = innerWidth;
   canvas.height = innerHeight;
-};
 
-class Particle {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-    this.vx = (Math.random() - 0.5) * 10;
-    this.vy = (Math.random() - 0.5) * 10;
-    this.life = 90;
-    this.size = Math.random() * 3 + 3;
-    this.color = `hsl(${Math.random()*30+330},100%,70%)`;
+  const fireworks = [];
+
+  function randomFirework() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height * 0.6;
+    const particles = [];
+    const colors = ['#ff4d6d', '#ff8fab', '#ffd166', '#fff'];
+
+    for (let i = 0; i < 90; i++) {
+      particles.push({
+        x, y,
+        angle: Math.random() * Math.PI * 2,
+        speed: Math.random() * 4 + 2,
+        radius: 2,
+        alpha: 1,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+    fireworks.push(particles);
   }
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    this.vy += 0.08;
-    this.life--;
+
+  function animate() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    fireworks.forEach((fw, i) => {
+      fw.forEach(p => {
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        p.alpha -= 0.015;
+
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      if (fw[0].alpha <= 0) fireworks.splice(i,1);
+    });
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animate);
   }
-  draw() {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-    ctx.fill();
-  }
-}
 
-let particles = [];
+  setInterval(randomFirework, 900);
+  animate();
 
-function explode(x, y) {
-  for (let i = 0; i < 120; i++) particles.push(new Particle(x, y));
-  boom.currentTime = 0;
-  boom.volume = 0.45;
-  boom.play().catch(()=>{});
-}
-
-function autoFireworks() {
-  explode(
-    Math.random() * canvas.width * 0.8 + canvas.width * 0.1,
-    Math.random() * canvas.height * 0.35 + 60
-  );
-}
-
-setInterval(autoFireworks, 1500);
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles = particles.filter(p => p.life > 0);
-  particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animate);
-}
-animate();
-
-/* enable audio after first click */
-document.body.addEventListener('click', () => {
-  bgm.volume = 0.25;
-  bgm.play().catch(()=>{});
-  boom.play().then(()=>boom.pause()).catch(()=>{});
-}, { once:true });
+  window.onresize = () => {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+  };
 </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
